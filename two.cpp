@@ -1,24 +1,31 @@
-void abc(Node * root,vector<int> &v,int &level,int maxlevel)
-{
+    vector<int> rightView(Node *root)
+    {
+    
+    vector<int>v;
     if(root==NULL)
-    return ;
-    else
-    {  
-        if(maxlevel>level)
-        {
-              v.push_back(root->data);
-              level=maxlevel;
-        }
-          abc(root->right,v,level,maxlevel+1);      
-         abc(root->left,v,level,maxlevel+1);
+    return v;
 
+    queue<Node*> q;
+    q.push(root);
+    
+    while(q.size())
+    {
+        int size=q.size();
+        for(int i=0;i<size;i++)
+        {
+            Node* temp=q.front();
+            q.pop();
+            
+            if(i==0)
+            v.push_back(temp->data);
+
+            if(temp->right!=NULL)                           //just reverse left and right condition which is the inly difference from left view
+            q.push(temp->right);
+            
+            if(temp->left!=NULL)
+            q.push(temp->left);
+            
+        }
     }
-}
-vector<int> rightView(Node *root)
-{
-   vector<int> v;
-   int level=0;
-   int maxlevel=1;
-   abc(root,v,level,maxlevel);
-   return v;
-}
+return v;
+    }
